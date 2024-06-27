@@ -31,4 +31,3 @@ print(len(answers))
 answers.sort()
 for i in range(len(answers)):
     print(answers[i])
-print("hello world")

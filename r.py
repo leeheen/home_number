@@ -1,14 +1,23 @@
-n,k = map(int,input().split())
-degree = list(map(int,input().split()))
-mid = 0
+N,S = map(int,input().split())
+nums = list(map(int,input().split()))
+answer = 100001
+left = -1
+right = -1
 hap = 0
-for i in range(k):
-    hap += degree[i]
-answer = hap
-while mid < n-k:
-    hap -= degree[mid]
-    hap += degree[mid+k]
-    if answer < hap:
-        answer = hap
-    mid += 1
-print(answer)
+check = 0
+while right < N:
+    if hap < S:
+        right += 1
+        if right < N:
+            hap += nums[right]
+    if hap >= S:
+        if right - left < answer:
+            answer = right - left
+        check = 1
+        left += 1
+        if left < N:
+            hap -= nums[left]
+if check:
+    print(answer)
+else:
+    print(0)

@@ -1,5 +1,6 @@
 n,m = map(int,input().split())
 parents = [i for i in range(n+1)]
+change = 0
 def MakeSet(a,b):
     a = Find(a)
     b = Find(b)

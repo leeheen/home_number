@@ -1,4 +1,5 @@
 #백준 온라인 저지 1506 경찰서
+
 n = int(input())
 cost = list(map(int,input().split())) #경찰서 비용
 city = [[0 for _ in range(n+1)]] #도로 상태

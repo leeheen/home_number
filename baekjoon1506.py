@@ -16,7 +16,7 @@ for i in range(1,n+1):
     for j in range(1,n+1):
         if city[i][j] == 1: #도로를 갈 수 있는 경우(간선이 존재하는 경우)
             graph[i].append(j)
-def dfs(node):
+def dfs(node): #dfs를 통한 SCC찾기
     global id
     IS[node] = id
     id += 1

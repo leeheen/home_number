@@ -38,5 +38,5 @@ for i in range(1,v+1):
         dfs(i)
 SCC.sort()
 print(len(SCC)) # 슌환 개수
-for i in SCC:
-    print(*i,-1)
+for i in SCC: # 강하게 연결된 요소와 정리한 노드 출력
+    print(*i)

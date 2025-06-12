@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stidlib.h>
+#include <time.h>
+#include <Window.h>
+void PlayGame(int difficulty);
+void Intro();
+
+int main()
+{
+    Intro();
+
+    return 0;
+}
+void PlayGame(int difficulty)
+{
+    switch(diffculty)
+    {
+
+    }
+}
+void Intro()
+{
+    printf("")
+}

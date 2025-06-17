@@ -1,24 +1,94 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define MASK '#'
+#define EASY_i 1//(숫자 설정)
+#define EASY_j 1 // (숫자 설정)
+#define NORMAL_i // (숫자 설정)
+#define NORMAL_j 1//(숫자 설정)
+#define HARD_i 1//(숫자 설정)
+#define HARD_j 1 // (숫자 설정)
 #include <stdio.h>
-#include <stidlib.h>
+#include <stdlib.h>
 #include <time.h>
-#include <Window.h>
-void PlayGame(int difficulty);
-void Intro();
-
+#include <Windows.h>
+int best_time = 0;
+void PlayGame();
+void Easy();
+void Shuffle(int arr[], int size);
 int main()
 {
-    Intro();
-
+    int selection = 0;
+    /*for (int i = 0; i < 3; i++) {
+        printf("Loading");
+        for (int j = 0; j < 3; j++) {
+            printf("*");
+            Sleep(1000);
+        }
+        system("cls");
+    }*/
+    do {
+        printf("**************************************\n");
+        printf("\n");
+        printf("** !@#$ Welcome Card Memory Game $#@! **\n");
+        printf("\n");
+        printf("**************************************\n");
+        printf("\n");
+        printf("1.PlayGame      2.BestTime     3.quit\n");
+        scanf("%d", &selection);
+        switch (selection)
+        {
+        case 1:
+            system("cls");
+            PlayGame();
+            break;
+        case 2:
+            system("cls");
+            break;
+        case 3:
+            system("cls");
+            printf("See You Next Time!!!");
+            break;
+        }
+    } while (selection != 3);
     return 0;
 }
-void PlayGame(int difficulty)
+void PlayGame()
 {
-    switch(diffculty)
+    int difficulty = 0;
+    printf("**       @Select Difficulty!@       **");
+    printf("1.Easy      2.Normal      3.Hard");
+    switch (difficulty)
     {
-
+        case 1:
+            break;
     }
 }
-void Intro()
+void Shuffle(int arr[], int size)
 {
-    printf("")
+    for (int i = size - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+}
+void Easy()
+{
+    int board[EASY_i][EASY_j] = {0};
+    int fake_board[EASY_i][EASY_j] = { 0 };
+    for (int i = 0; i < EASY_i; i++) {
+        for (int j = 0; j < EASY_j; j++) {
+            fake_board[i][j] = MASK;
+        }
+    }
+    int cards[EASY_i * EASY_j] = { 0 };
+    for (int i = 0; i < EASY_i * EASY_j; i++) {
+        cards[2 * i] = i + 1;
+        cards[2 * i + 1] = i + 1;
+    }
+
+    srand(time(NULL));
+    
+    shuffle(cards, EASY_i * EASY_j);
+
+
 }

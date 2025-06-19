@@ -1,30 +1,39 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define MASK '#'
-#define EASY_i 1//(숫자 설정)
-#define EASY_j 1 // (숫자 설정)
-#define NORMAL_i // (숫자 설정)
-#define NORMAL_j 1//(숫자 설정)
-#define HARD_i 1//(숫자 설정)
-#define HARD_j 1 // (숫자 설정)
+#define EASY_i 2//(숫자 설정)
+#define EASY_j 2 // (숫자 설정)
+#define NORMAL_i 2// (숫자 설정)
+#define NORMAL_j 2//(숫자 설정)
+#define HARD_i 2//(숫자 설정)
+#define HARD_j 2 // (숫자 설정)
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <Windows.h>
-int best_time = 0;
+#include <conio.h>
+double best_sec_easy = -1;
+int best_min_easy = -1;
+double best_sec_normal = -1;
+int best_min_normal = -1;
+double best_sec_hard = -1;
+int best_min_hard = -1;
+int cursorX = 0, cursorY = 0;
 void PlayGame();
 void Easy();
+void Normal();
+void Hard();
 void Shuffle(int arr[], int size);
+void PrintBoard(int* arr, int* revealed, int Y, int X);
 int main()
 {
     int selection = 0;
-    /*for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         printf("Loading");
         for (int j = 0; j < 3; j++) {
             printf("*");
-            Sleep(1000);
+            Sleep(700);
         }
         system("cls");
-    }*/
+    }
     do {
         printf("**************************************\n");
         printf("\n");
@@ -42,10 +51,43 @@ int main()
             break;
         case 2:
             system("cls");
+            if (best_min_easy == -1) {
+                printf("*************************\n");
+                printf(" ***Easy Best Time : 0 : 0***\n");
+                printf("*************************\n");
+            }
+            else {
+                printf("***************************\n");
+                printf("***Easy Best Time : %d : %.2f***\n", best_min_easy, best_sec_easy);
+                printf("***************************\n");
+            }
+            if (best_min_normal == -1) {
+                printf("*************************\n");
+                printf(" ***Normal Best Time : 0 : 0***\n");
+                printf("*************************\n");
+            }
+            else {
+                printf("***************************\n");
+                printf("***Normal Best Time : %d : %.2f***\n", best_min_normal, best_sec_normal);
+                printf("***************************\n");
+            }
+            if (best_min_hard == -1) {
+                printf("*************************\n");
+                printf(" ***Hard Best Time : 0 : 0***\n");
+                printf("*************************\n");
+            }
+            else {
+                printf("***************************\n");
+                printf("***Hard Best Time : %d : %.2f***\n", best_min_hard, best_sec_hard);
+                printf("***************************\n");
+            }
+            Sleep(4000);
+            system("cls");
             break;
         case 3:
             system("cls");
             printf("See You Next Time!!!");
+            Sleep(2000);
             break;
         }
     } while (selection != 3);
@@ -53,13 +95,65 @@ int main()
 }
 void PlayGame()
 {
+    system("cls");
     int difficulty = 0;
-    printf("**       @Select Difficulty!@       **");
-    printf("1.Easy      2.Normal      3.Hard");
+    printf("**       @Select Difficulty!@       **\n");
+    printf("1.Easy      2.Normal      3.Hard\n");
+    scanf("%d", &difficulty);
+    system("cls");
     switch (difficulty)
     {
-        case 1:
-            break;
+    case 1:
+        printf("Move Key:Arrow\n");
+        printf("Select Key:Enter");
+        Sleep(4000);
+        system("cls");
+        printf("Good Luck!\n");
+        if (best_min_easy == -1) {
+            printf("Your Best Time: 0 : 0\n");
+        }
+        else {
+            printf("Your Best Time: %d:%.2f\n", best_min_easy, best_sec_easy);
+        }
+        Sleep(2000);
+        Easy();
+        Sleep(2000);
+        system("cls");
+        break;
+    case 2:
+        printf("Move Key:Arrow\n");
+        printf("Select Key:Enter");
+        Sleep(4000);
+        system("cls");
+        printf("Good Luck!\n");
+        if (best_min_normal == -1) {
+            printf("Your Best Time: 0 : 0\n");
+        }
+        else {
+            printf("Your Best Time: %d:%.2f\n", best_min_normal, best_sec_normal);
+        }
+        Sleep(2000);
+        Normal();
+        Sleep(2000);
+        system("cls");
+        break;
+    case 3:
+        printf("Move Key:Arrow\n");
+        printf("Select Key:Enter");
+        Sleep(4000);
+        system("cls");
+        printf("Good Luck!\n");
+        if (best_min_easy == -1) {
+            printf("Your Best Time: 0 : 0\n");
+        }
+        else {
+            printf("Your Best Time: %d:%.2f\n", best_min_hard, best_sec_hard);
+        }
+        Sleep(2000);
+        Hard();
+        Sleep(2000);
+        system("cls");
+        break;
     }
 }
 void Shuffle(int arr[], int size)
@@ -71,24 +165,287 @@ void Shuffle(int arr[], int size)
         arr[j] = tmp;
     }
 }
+void PrintBoard(int* arr, int* revealed, int Y, int X)
+{
+    system("cls");
+    for (int y = 0; y < Y; y++) {
+        for (int x = 0; x < X; x++) {
+            int val = *(arr + y * X + x);
+            int isRevealed = *(revealed + y * X + x);
+            if (y == cursorY && x == cursorX) {
+                if (isRevealed)
+                    printf("[%2d] ", val);
+                else
+                    printf("[ # ] ");
+            }
+            else {
+                if (isRevealed)
+                    printf(" %2d  ", val);
+                else
+                    printf("  #   ");
+            }
+        }
+        printf("\n");
+    }
+}
 void Easy()
 {
-    int board[EASY_i][EASY_j] = {0};
-    int fake_board[EASY_i][EASY_j] = { 0 };
-    for (int i = 0; i < EASY_i; i++) {
-        for (int j = 0; j < EASY_j; j++) {
-            fake_board[i][j] = MASK;
-        }
-    }
+    int board[EASY_i][EASY_j] = { 0 };
     int cards[EASY_i * EASY_j] = { 0 };
-    for (int i = 0; i < EASY_i * EASY_j; i++) {
+    int revealed[EASY_i][EASY_j] = { 0 };
+
+    int first_pickX = -1, first_pickY = -1;
+    int is_second_pick = 0;
+    clock_t start_time, end_time;
+    start_time = clock();
+
+    for (int i = 0; i < (EASY_i * EASY_j) / 2; i++) {
         cards[2 * i] = i + 1;
         cards[2 * i + 1] = i + 1;
     }
 
-    srand(time(NULL));
-    
-    shuffle(cards, EASY_i * EASY_j);
+    srand((unsigned)time(NULL));
+    Shuffle(cards, EASY_i * EASY_j);
 
+    for (int i = 0; i < EASY_i; i++) {
+        for (int j = 0; j < EASY_j; j++) {
+            board[i][j] = cards[i * EASY_j + j];
+        }
+    }
 
+    while (1) {
+        PrintBoard(&board[0][0], &revealed[0][0], EASY_i, EASY_j);
+        int ch = _getch();
+        if (ch == 13) {
+            if (!revealed[cursorY][cursorX]) {
+                revealed[cursorY][cursorX] = 1;
+
+                if (!is_second_pick) {
+                    first_pickX = cursorX;
+                    first_pickY = cursorY;
+                    is_second_pick = 1;
+                }
+                else if (cursorX != first_pickX || cursorY != first_pickY) {
+                    PrintBoard(&board[0][0], &revealed[0][0], EASY_i, EASY_j);
+                    Sleep(100);
+
+                    if (board[cursorY][cursorX] != board[first_pickY][first_pickX]) {
+                        revealed[cursorY][cursorX] = 0;
+                        revealed[first_pickY][first_pickX] = 0;
+                    }
+                    is_second_pick = 0;
+                }
+            }
+        }
+        else if (ch == 224) {
+            ch = _getch();
+            switch (ch) {
+            case 72: if (cursorY > 0) cursorY--; break; // up
+            case 80: if (cursorY < EASY_i - 1) cursorY++; break; // down
+            case 75: if (cursorX > 0) cursorX--; break; // left
+            case 77: if (cursorX < EASY_j - 1) cursorX++; break; // right
+            }
+        }
+
+        int is_match = 1;
+        for (int i = 0; i < EASY_i; i++) {
+            for (int j = 0; j < EASY_j; j++) {
+                if (revealed[i][j] == 0)
+                    is_match = 0;
+            }
+        }
+
+        if (is_match) {
+            end_time = clock();
+            double sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            int min = (int)(sec / 60.0);
+            sec -= (min * 60);
+
+            Sleep(1000);
+            system("cls");
+            printf("Congratulations!\n");
+            printf("Your Time: %d : %.2f\n", min, sec);
+
+            if (best_min_easy == -1 || (min + sec / 60.0) < (best_min_easy + best_sec_easy / 60.0)) {
+                best_min_easy = (int)min;
+                best_sec_easy = sec;
+                printf("*Best Time!*\n");
+            }
+            break;
+        }
+    }
+}
+void Normal()
+{
+    int board[NORMAL_i][NORMAL_j] = { 0 };
+    int cards[NORMAL_i * NORMAL_j] = { 0 };
+    int revealed[NORMAL_i][NORMAL_j] = { 0 };
+
+    int first_pickX = -1, first_pickY = -1;
+    int is_second_pick = 0;
+    clock_t start_time, end_time;
+    start_time = clock();
+
+    for (int i = 0; i < (NORMAL_i * NORMAL_j) / 2; i++) {
+        cards[2 * i] = i + 1;
+        cards[2 * i + 1] = i + 1;
+    }
+
+    srand((unsigned)time(NULL));
+    Shuffle(cards, NORMAL_i * NORMAL_j);
+
+    for (int i = 0; i < NORMAL_i; i++) {
+        for (int j = 0; j < NORMAL_j; j++) {
+            board[i][j] = cards[i * NORMAL_j + j];
+        }
+    }
+
+    while (1) {
+        PrintBoard(&board[0][0], &revealed[0][0], NORMAL_i, NORMAL_j);
+        int ch = _getch();
+        if (ch == 13) {
+            if (!revealed[cursorY][cursorX]) {
+                revealed[cursorY][cursorX] = 1;
+
+                if (!is_second_pick) {
+                    first_pickX = cursorX;
+                    first_pickY = cursorY;
+                    is_second_pick = 1;
+                }
+                else if (cursorX != first_pickX || cursorY != first_pickY) {
+                    PrintBoard(&board[0][0], &revealed[0][0], NORMAL_i, NORMAL_j);
+                    Sleep(500);
+
+                    if (board[cursorY][cursorX] != board[first_pickY][first_pickX]) {
+                        revealed[cursorY][cursorX] = 0;
+                        revealed[first_pickY][first_pickX] = 0;
+                    }
+                    is_second_pick = 0;
+                }
+            }
+        }
+        else if (ch == 224) {
+            ch = _getch();
+            switch (ch) {
+            case 72: if (cursorY > 0) cursorY--; break; // up
+            case 80: if (cursorY < NORMAL_i - 1) cursorY++; break; // down
+            case 75: if (cursorX > 0) cursorX--; break; // left
+            case 77: if (cursorX < NORMAL_j - 1) cursorX++; break; // right
+            }
+        }
+
+        int is_match = 1;
+        for (int i = 0; i < NORMAL_i; i++) {
+            for (int j = 0; j < NORMAL_j; j++) {
+                if (revealed[i][j] == 0)
+                    is_match = 0;
+            }
+        }
+
+        if (is_match) {
+            end_time = clock();
+            double sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            int min = (int)(sec / 60.0);
+            sec -= (min * 60);
+
+            Sleep(1000);
+            system("cls");
+            printf("Congratulations!\n");
+            printf("Your Time: %d : %.2f\n", min, sec);
+
+            if (best_min_normal == -1 || (min + sec / 60.0) < (best_min_normal + best_sec_normal / 60.0)) {
+                best_min_normal = (int)min;
+                best_sec_normal = sec;
+                printf("*Best Time!*\n");
+            }
+            break;
+        }
+    }
+}
+void Hard()
+{
+    int board[HARD_i][HARD_j] = { 0 };
+    int cards[HARD_i * HARD_j] = { 0 };
+    int revealed[HARD_i][HARD_j] = { 0 };
+
+    int first_pickX = -1, first_pickY = -1;
+    int is_second_pick = 0;
+    clock_t start_time, end_time;
+    start_time = clock();
+
+    for (int i = 0; i < (HARD_i * HARD_j) / 2; i++) {
+        cards[2 * i] = i + 1;
+        cards[2 * i + 1] = i + 1;
+    }
+
+    srand((unsigned)time(NULL));
+    Shuffle(cards, HARD_i * HARD_j);
+
+    for (int i = 0; i < HARD_i; i++) {
+        for (int j = 0; j < HARD_j; j++) {
+            board[i][j] = cards[i * HARD_j + j];
+        }
+    }
+
+    while (1) {
+        PrintBoard(&board[0][0], &revealed[0][0], HARD_i, HARD_j);
+        int ch = _getch();
+        if (ch == 13) {
+            if (!revealed[cursorY][cursorX]) {
+                revealed[cursorY][cursorX] = 1;
+
+                if (!is_second_pick) {
+                    first_pickX = cursorX;
+                    first_pickY = cursorY;
+                    is_second_pick = 1;
+                }
+                else if (cursorX != first_pickX || cursorY != first_pickY) {
+                    PrintBoard(&board[0][0], &revealed[0][0], HARD_i, HARD_j);
+                    Sleep(500);
+
+                    if (board[cursorY][cursorX] != board[first_pickY][first_pickX]) {
+                        revealed[cursorY][cursorX] = 0;
+                        revealed[first_pickY][first_pickX] = 0;
+                    }
+                    is_second_pick = 0;
+                }
+            }
+        }
+        else if (ch == 224) {
+            ch = _getch();
+            switch (ch) {
+            case 72: if (cursorY > 0) cursorY--; break; // up
+            case 80: if (cursorY < HARD_i - 1) cursorY++; break; // down
+            case 75: if (cursorX > 0) cursorX--; break; // left
+            case 77: if (cursorX < HARD_j - 1) cursorX++; break; // right
+            }
+        }
+
+        int is_match = 1;
+        for (int i = 0; i < HARD_i; i++) {
+            for (int j = 0; j < HARD_j; j++) {
+                if (revealed[i][j] == 0)
+                    is_match = 0;
+            }
+        }
+
+        if (is_match) {
+            end_time = clock();
+            double sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            int min = (int)(sec / 60.0);
+            sec -= (min * 60);
+
+            Sleep(1000);
+            system("cls");
+            printf("Congratulations!\n");
+            printf("Your Time: %d : %.2f\n", min, sec);
+
+            if (best_min_hard == -1 || (min + sec / 60.0) < (best_min_hard + best_sec_hard / 60.0)) {
+                best_min_hard = (int)min;
+                best_sec_hard = sec;
+                printf("*Best Time!*\n");
+            }
+            break;
+        }
+    }
 }

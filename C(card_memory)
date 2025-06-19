@@ -1,28 +1,28 @@
-#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS // scanf를 _s없이 사용하기 위한 선언
 #define EASY_i 2//(숫자 설정)
 #define EASY_j 2 // (숫자 설정)
 #define NORMAL_i 2// (숫자 설정)
 #define NORMAL_j 2//(숫자 설정)
 #define HARD_i 2//(숫자 설정)
 #define HARD_j 2 // (숫자 설정)
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <Windows.h>
-#include <conio.h>
-double best_sec_easy = -1;
+#include <stdio.h> // 표준 입출력
+#include <stdlib.h> // 표준 라이브러리
+#include <time.h> // 시간 라이브러리
+#include <Windows.h> // Window 그래픽 라이브러리
+#include <conio.h> // 콘솔 관련 라이브러리
+double best_sec_easy = -1; // 난이도 별 베스트 타임
 int best_min_easy = -1;
 double best_sec_normal = -1;
 int best_min_normal = -1;
 double best_sec_hard = -1;
 int best_min_hard = -1;
 int cursorX = 0, cursorY = 0;
-void PlayGame();
-void Easy();
-void Normal();
-void Hard();
-void Shuffle(int arr[], int size);
-void PrintBoard(int* arr, int* revealed, int Y, int X);
+void PlayGame(); // 게임 시작 관련 함수
+void Easy(); // 난이도 쉬움
+void Normal(); // 난이도 보통
+void Hard(); // 난이도 어려움
+void Shuffle(int arr[], int size); // 카드 섞기
+void PrintBoard(int* arr, int* revealed, int Y, int X); // 보드 출력 함수
 int main()
 {
     int selection = 0;
@@ -45,11 +45,11 @@ int main()
         scanf("%d", &selection);
         switch (selection)
         {
-        case 1:
+        case 1: // 게임 하기
             system("cls");
             PlayGame();
             break;
-        case 2:
+        case 2: // 베스트 타임 기록 보기
             system("cls");
             if (best_min_easy == -1) {
                 printf("*************************\n");
@@ -84,7 +84,7 @@ int main()
             Sleep(4000);
             system("cls");
             break;
-        case 3:
+        case 3: // 게임 나가기
             system("cls");
             printf("See You Next Time!!!");
             Sleep(2000);
@@ -99,11 +99,11 @@ void PlayGame()
     int difficulty = 0;
     printf("**       @Select Difficulty!@       **\n");
     printf("1.Easy      2.Normal      3.Hard\n");
-    scanf("%d", &difficulty);
+    scanf("%d", &difficulty); // 난이도 선택
     system("cls");
     switch (difficulty)
     {
-    case 1:
+    case 1: // 쉬움
         printf("Move Key:Arrow\n");
         printf("Select Key:Enter");
         Sleep(4000);
@@ -120,7 +120,7 @@ void PlayGame()
         Sleep(2000);
         system("cls");
         break;
-    case 2:
+    case 2: // 보통
         printf("Move Key:Arrow\n");
         printf("Select Key:Enter");
         Sleep(4000);
@@ -137,7 +137,7 @@ void PlayGame()
         Sleep(2000);
         system("cls");
         break;
-    case 3:
+    case 3: // 어려움
         printf("Move Key:Arrow\n");
         printf("Select Key:Enter");
         Sleep(4000);
